@@ -3,10 +3,439 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disney+ Birthday Celebration ✨</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Disney+ Birthday Special ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', 'Fredoka', sans-serif;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 1. GATEKEEPER OVERLAY */
+        .gatekeeper-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, #1e3a8a, #0f172a, #020617);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            padding: 20px;
+        }
+
+        .gatekeeper-card {
+            background: rgba(30, 41, 59, 0.95);
+            border: 2px solid #3b82f6;
+            color: #fff;
+            padding: 40px;
+            border-radius: 24px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 0 50px rgba(59, 130, 246, 0.4);
+            position: relative;
+        }
+
+        .disney-logo-badge {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #60a5fa;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .gatekeeper-card h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .gatekeeper-card p {
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+
+        .gate-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            min-height: 60px;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-yes {
+            background: #2563eb;
+            color: white;
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.6);
+            z-index: 10;
+        }
+
+        .btn-yes:hover {
+            background: #3b82f6;
+            transform: scale(1.08);
+        }
+
+        .btn-no {
+            background: #ef4444;
+            color: white;
+            transition: all 0.15s ease-out;
+            z-index: 5;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* 2. DISNEY NAVBAR */
+        .disney-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: #090b13;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 36px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .disney-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .disney-logo span {
+            color: #3b82f6;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #f9f9f9;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .nav-links a:hover { opacity: 1; }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #1e293b;
+            padding: 6px 14px;
+            border-radius: 20px;
+        }
+
+        /* 3. HERO BANNER */
+        .hero-banner {
+            position: relative;
+            min-height: 65vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 60px 40px;
+            background: linear-gradient(to right, #090b13 40%, transparent 100%), url('https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1200') center/cover no-repeat;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .disney-original-tag {
+            color: #60a5fa;
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.2rem;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #fff, #93c5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-disney-primary {
+            background: #f9f9f9;
+            color: #0e0b14;
+        }
+
+        .btn-disney-secondary {
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            border: 1px solid #fff;
+        }
+
+        /* 4. SECTIONS */
+        .disney-section {
+            padding: 40px 60px;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            color: #60a5fa;
+        }
+
+        .section-header p {
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+
+        /* TIMER & STATS */
+        .stats-section {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 20px;
+            margin: 20px 60px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .timer-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .time-card {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 2px solid #3b82f6;
+            padding: 15px 25px;
+            border-radius: 16px;
+            min-width: 100px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .time-card .num {
+            display: block;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #60a5fa;
+        }
+
+        .time-card .num.highlight { color: #f43f5e; }
+
+        .time-card small {
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-box {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stat-icon { font-size: 2.2rem; }
+
+        .stat-info h3 { font-size: 1.3rem; color: #38bdf8; }
+        .stat-info p { font-size: 0.85rem; color: #94a3b8; }
+
+        /* CAKE */
+        .cake-container {
+            height: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin: 30px 0;
+        }
+
+        .cake {
+            width: 180px;
+            position: relative;
+        }
+
+        .layer {
+            width: 100%;
+            height: 50px;
+            border-radius: 12px;
+        }
+
+        .layer-top { background: #3b82f6; }
+        .layer-bottom { background: #1d4ed8; margin-top: -5px; }
+
+        .candle {
+            width: 12px;
+            height: 35px;
+            background: #fbbf24;
+            position: absolute;
+            top: -35px;
+            left: 35%;
+            border-radius: 4px;
+        }
+
+        .candle-2 { left: 60%; }
+
+        .flame {
+            width: 14px;
+            height: 20px;
+            background: #f97316;
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            top: -18px;
+            left: -1px;
+            box-shadow: 0 0 12px #f97316;
+            animation: flicker 0.6s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+
+        .flame.off { display: none; }
+
+        /* GALLERY TILES */
+        .disney-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .disney-tile {
+            border-radius: 12px;
+            overflow: hidden;
+            background: #1e293b;
+            border: 2px solid rgba(249, 249, 249, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .disney-tile:hover {
+            transform: scale(1.04);
+            border-color: #3b82f6;
+        }
+
+        .disney-tile img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .disney-tile p {
+            padding: 12px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* LETTER ENVELOPE */
+        .envelope-card {
+            background: #1e293b;
+            border: 2px dashed #3b82f6;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .letter-body {
+            white-space: pre-line;
+            margin-top: 20px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #93c5fd;
+            text-align: left;
+        }
+
+        /* VOUCHERS */
+        .voucher-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .voucher-card {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .voucher-card .icon { font-size: 2.5rem; }
+
+        .disney-footer {
+            padding: 40px 60px;
+            text-align: center;
+            color: #64748b;
+            border-top: 1px solid #1e293b;
+        }
+
+        @media(max-width: 768px) {
+            .hero-banner { padding: 90px 20px 30px; }
+            .hero-content h1 { font-size: 2.3rem; }
+            .disney-section, .stats-section { padding: 30px 20px; margin: 20px 10px; }
+            .nav-links { display: none; }
+        }
+    </style>
 </head>
 <body>
 
@@ -14,8 +443,8 @@
     <div id="gatekeeper" class="gatekeeper-overlay">
         <div class="gatekeeper-card">
             <div class="disney-logo-badge">Disney+ Birthday</div>
-            <h1 id="gateQuestion">Are you ready to unlock your Disney Birthday Pass?</h1>
-            <p id="gateSubtext">Only VIP Guests are allowed into the Kingdom! ✨</p>
+            <h1>Are you ready to unlock your Disney Birthday Pass?</h1>
+            <p>Only VIP Birthday Guests are allowed into the Kingdom! ✨</p>
             <div class="gate-buttons">
                 <button id="yesBtn" class="btn btn-yes">Yes, I'm Ready! ✨</button>
                 <button id="noBtn" class="btn btn-no">No 😜</button>
@@ -35,14 +464,13 @@
                     <a href="#stats">STATS</a>
                     <a href="#cake">CAKE</a>
                     <a href="#gallery">GALLERY</a>
-                    <a href="#music">SONGS</a>
                     <a href="#letter">LETTER</a>
                 </nav>
             </div>
             <div class="nav-right">
                 <div class="user-profile">
-                    <span class="profile-avatar">👑</span>
-                    <span class="profile-name" id="navProfileName">Princess</span>
+                    <span>👑</span>
+                    <span>Birthday Star</span>
                 </div>
             </div>
         </header>
@@ -52,19 +480,14 @@
             <div class="hero-content">
                 <div class="disney-original-tag">DISNEY+ ORIGINAL SPECIAL</div>
                 <h1 id="heroTitle">HAPPY BIRTHDAY!</h1>
-                <p class="hero-desc">Streaming live for her special day! Packed with magical memories, stats, songs, and cake!</p>
-                
+                <p class="hero-desc">Streaming live for her special day! Packed with magical memories, stats, rewards, and cake!</p>
                 <div class="hero-actions">
-                    <button id="playMusicBtn" class="btn btn-disney-primary">▶ Play Birthday Songs</button>
-                    <button id="blowCandleHeroBtn" class="btn btn-disney-secondary">🎂 Blow Candle</button>
+                    <button id="blowCandleHeroBtn" class="btn btn-disney-primary">🎂 Blow Candle</button>
                 </div>
             </div>
         </section>
 
-        <!-- BRAND HUBS -->
-        <section class="brand-hubs" id="brandHubs"></section>
-
-        <!-- 3. LIVE LIFETIME STATS & TIMER (OURFLIX STYLE) -->
+        <!-- 3. LIVE LIFETIME STATS & TIMER -->
         <section id="stats" class="disney-section stats-section">
             <div class="section-header">
                 <h2>✨ Live Lifetime Counter & World Stats</h2>
@@ -96,105 +519,3 @@
             </div>
 
             <!-- INTERESTING STATS GRID -->
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <div class="stat-icon">💓</div>
-                    <div class="stat-info">
-                        <h3 id="heartbeatCount">0</h3>
-                        <p>Heartbeats Shared</p>
-                    </div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-icon">😴</div>
-                    <div class="stat-info">
-                        <h3 id="sleepCount">0</h3>
-                        <p>Hours of Sweet Dreams</p>
-                    </div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-icon">🌅</div>
-                    <div class="stat-info">
-                        <h3 id="sunrisesCount">0</h3>
-                        <p>Sunrises Witnessed</p>
-                    </div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-icon">🎒</div>
-                    <div class="stat-info">
-                        <h3>Class 6 Champion</h3>
-                        <p>Current Mission</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- INTERACTIVE CAKE SECTION -->
-        <section id="cake" class="disney-section">
-            <div class="section-header">
-                <h2>Make a Wish & Blow Out the Candles 🎂</h2>
-                <p>Tap the button to extinguish the magic candles!</p>
-            </div>
-            <div class="cake-container">
-                <div class="cake">
-                    <div class="candle"><div class="flame" id="flame1"></div></div>
-                    <div class="candle candle-2"><div class="flame" id="flame2"></div></div>
-                    <div class="icing"></div>
-                    <div class="layer layer-top"></div>
-                    <div class="layer layer-bottom"></div>
-                </div>
-            </div>
-            <button id="blowBtn" class="btn btn-disney-primary">Blow Out Candles 🕯️</button>
-        </section>
-
-        <!-- PHOTO GALLERY -->
-        <section id="gallery" class="disney-section">
-            <div class="section-header">
-                <h2>📸 Birthday Moments Gallery</h2>
-            </div>
-            <div class="disney-grid" id="photoGrid"></div>
-        </section>
-
-        <!-- JUKEBOX -->
-        <section id="music" class="disney-section">
-            <div class="section-header">
-                <h2>🎵 Birthday Soundtrack</h2>
-            </div>
-            <div class="music-list" id="musicList"></div>
-        </section>
-
-        <!-- LETTER -->
-        <section id="letter" class="disney-section">
-            <div class="section-header">
-                <h2>💌 Royal Birthday Letter</h2>
-            </div>
-            <div class="envelope-card" id="envelopeCard">
-                <div class="envelope-header">
-                    <span>SEALED WITH MAGIC ✨</span>
-                    <p>Tap to open your custom birthday message</p>
-                </div>
-                <div class="letter-body hidden" id="letterBody"></div>
-            </div>
-        </section>
-
-        <!-- VOUCHERS -->
-        <section class="disney-section">
-            <div class="section-header">
-                <h2>🎁 Claim VIP Birthday Passes</h2>
-            </div>
-            <div class="voucher-grid" id="voucherGrid"></div>
-        </section>
-
-        <!-- FOOTER -->
-        <footer class="disney-footer">
-            <div class="disney-logo">Disney<span>+</span></div>
-            <p>© Disney Birthday Celebration Special. Built for the Birthday Star!</p>
-        </footer>
-
-    </div>
-
-    <audio id="bgAudio"></audio>
-
-    <script src="data.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
