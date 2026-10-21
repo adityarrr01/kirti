@@ -214,12 +214,6 @@
             color: #0e0b14;
         }
 
-        .btn-disney-secondary {
-            background: rgba(0,0,0,0.6);
-            color: #fff;
-            border: 1px solid #fff;
-        }
-
         /* 4. SECTIONS */
         .disney-section {
             padding: 40px 60px;
@@ -519,3 +513,227 @@
             </div>
 
             <!-- INTERESTING STATS GRID -->
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-icon">💓</div>
+                    <div class="stat-info">
+                        <h3 id="heartbeatCount">0</h3>
+                        <p>Heartbeats Shared</p>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">😴</div>
+                    <div class="stat-info">
+                        <h3 id="sleepCount">0</h3>
+                        <p>Hours of Sweet Dreams</p>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">🌅</div>
+                    <div class="stat-info">
+                        <h3 id="sunrisesCount">0</h3>
+                        <p>Sunrises Witnessed</p>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">🎒</div>
+                    <div class="stat-info">
+                        <h3>Class 6 Champion</h3>
+                        <p>Current Rank</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE CAKE SECTION -->
+        <section id="cake" class="disney-section">
+            <div class="section-header">
+                <h2>Make a Wish & Blow Out the Candles 🎂</h2>
+                <p>Tap the button to extinguish the magic candles!</p>
+            </div>
+            <div class="cake-container">
+                <div class="cake">
+                    <div class="candle"><div class="flame" id="flame1"></div></div>
+                    <div class="candle candle-2"><div class="flame" id="flame2"></div></div>
+                    <div class="icing"></div>
+                    <div class="layer layer-top"></div>
+                    <div class="layer layer-bottom"></div>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <button id="blowBtn" class="btn btn-yes">Blow Out Candles 🕯️</button>
+            </div>
+        </section>
+
+        <!-- PHOTO GALLERY -->
+        <section id="gallery" class="disney-section">
+            <div class="section-header">
+                <h2>📸 Birthday Moments Gallery</h2>
+            </div>
+            <div class="disney-grid">
+                <div class="disney-tile">
+                    <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600" alt="Birthday Star">
+                    <p>Birthday Queen ✨</p>
+                </div>
+                <div class="disney-tile">
+                    <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600" alt="Memories">
+                    <p>Class 6 Champion 👑</p>
+                </div>
+                <div class="disney-tile">
+                    <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600" alt="Fun">
+                    <p>Magical Moments 📸</p>
+                </div>
+                <div class="disney-tile">
+                    <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600" alt="Party">
+                    <p>Party Time! 🎉</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- LETTER -->
+        <section id="letter" class="disney-section">
+            <div class="section-header">
+                <h2>💌 Royal Birthday Letter</h2>
+            </div>
+            <div class="envelope-card" id="envelopeCard">
+                <div class="envelope-header">
+                    <span>SEALED WITH MAGIC ✨</span>
+                    <p>Tap to open your custom birthday message</p>
+                </div>
+                <div class="letter-body hidden" id="letterBody">
+Happy Birthday! 🎈✨
+
+Wishing you a magical day filled with infinite joy, extra cake, and big laughs!
+
+Keep shining super bright in Class 6 and achieving amazing things! May all your birthday wishes come true today!
+
+Have the happiest birthday ever! 🎉👑
+                </div>
+            </div>
+        </section>
+
+        <!-- VOUCHERS -->
+        <section class="disney-section">
+            <div class="section-header">
+                <h2>🎁 Claim VIP Birthday Passes</h2>
+            </div>
+            <div class="voucher-grid">
+                <div class="voucher-card">
+                    <div class="icon">🍦</div>
+                    <h3>Unlimited Ice Cream Pass</h3>
+                    <small>Pass Code: DISNEY-SWEET-11</small>
+                </div>
+                <div class="voucher-card">
+                    <div class="icon">🍕</div>
+                    <h3>Pizza Night VIP Pass</h3>
+                    <small>Pass Code: MAGIC-PIZZA</small>
+                </div>
+                <div class="voucher-card">
+                    <div class="icon">🎮</div>
+                    <h3>Unlimited Game Time</h3>
+                    <small>Pass Code: GAMER-QUEEN</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="disney-footer">
+            <div class="disney-logo">Disney<span>+</span></div>
+            <p>© Disney Birthday Celebration Special. Built for the Birthday Star!</p>
+        </footer>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. RUNAWAY "NO" BUTTON
+            const noBtn = document.getElementById('noBtn');
+            function escapeNoBtn() {
+                const x = Math.random() * (window.innerWidth - 120);
+                const y = Math.random() * (window.innerHeight - 60);
+                noBtn.style.position = 'fixed';
+                noBtn.style.left = `${Math.max(20, x)}px`;
+                noBtn.style.top = `${Math.max(20, y)}px`;
+            }
+            noBtn.addEventListener('mouseover', escapeNoBtn);
+            noBtn.addEventListener('click', escapeNoBtn);
+
+            // 2. UNLOCK DASHBOARD
+            const yesBtn = document.getElementById('yesBtn');
+            const gatekeeper = document.getElementById('gatekeeper');
+            const mainContent = document.getElementById('mainContent');
+
+            yesBtn.addEventListener('click', () => {
+                gatekeeper.classList.add('hidden');
+                mainContent.classList.remove('hidden');
+                if (typeof confetti === 'function') {
+                    confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+                }
+                startLiveStats();
+            });
+
+            // 3. LIVE LIFETIME TIMER (Default set to 2013-10-21)
+            const birthDateObj = new Date("2013-10-21T08:00:00");
+
+            function startLiveStats() {
+                function updateStats() {
+                    const now = new Date();
+                    const diffMs = now - birthDateObj;
+
+                    if (diffMs > 0) {
+                        const totalSeconds = Math.floor(diffMs / 1000);
+                        const totalMinutes = Math.floor(totalSeconds / 60);
+                        const totalHours = Math.floor(totalMinutes / 60);
+                        const totalDays = Math.floor(totalHours / 24);
+                        const years = Math.floor(totalDays / 365.25);
+                        const daysRemaining = Math.floor(totalDays % 365.25);
+
+                        const hours = totalHours % 24;
+                        const minutes = totalMinutes % 60;
+                        const seconds = totalSeconds % 60;
+
+                        document.getElementById('yearsCount').textContent = String(years).padStart(2, '0');
+                        document.getElementById('daysCount').textContent = String(daysRemaining).padStart(2, '0');
+                        document.getElementById('hoursCount').textContent = String(hours).padStart(2, '0');
+                        document.getElementById('minutesCount').textContent = String(minutes).padStart(2, '0');
+                        document.getElementById('secondsCount').textContent = String(seconds).padStart(2, '0');
+
+                        document.getElementById('heartbeatCount').textContent = Math.floor(totalMinutes * 80).toLocaleString();
+                        document.getElementById('sleepCount').textContent = Math.floor(totalDays * 8.5).toLocaleString();
+                        document.getElementById('sunrisesCount').textContent = totalDays.toLocaleString();
+                    }
+                }
+                updateStats();
+                setInterval(updateStats, 1000);
+            }
+
+            // 4. CAKE CANDLE BLOW
+            const blowBtn = document.getElementById('blowBtn');
+            const blowCandleHeroBtn = document.getElementById('blowCandleHeroBtn');
+
+            function blowCandles() {
+                document.getElementById('flame1').classList.add('off');
+                document.getElementById('flame2').classList.add('off');
+                if (typeof confetti === 'function') {
+                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                }
+                blowBtn.textContent = "Wish Granted! ✨";
+            }
+
+            blowBtn.addEventListener('click', blowCandles);
+            blowCandleHeroBtn.addEventListener('click', () => {
+                document.getElementById('cake').scrollIntoView({ behavior: 'smooth' });
+                setTimeout(blowCandles, 600);
+            });
+
+            // 5. ENVELOPE LETTER TOGGLE
+            const envelopeCard = document.getElementById('envelopeCard');
+            const letterBody = document.getElementById('letterBody');
+            envelopeCard.addEventListener('click', () => {
+                letterBody.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
