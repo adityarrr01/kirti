@@ -1,0 +1,75 @@
+/* TIMER & STATS SECTION */
+.stats-section {
+    background: rgba(15, 23, 42, 0.6);
+    border-radius: 20px;
+    margin: 20px 60px;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.timer-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.time-card {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border: 2px solid #3b82f6;
+    padding: 15px 25px;
+    border-radius: 16px;
+    min-width: 100px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.time-card .num {
+    display: block;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #60a5fa;
+}
+
+.time-card .num.highlight {
+    color: #f43f5e;
+}
+
+.time-card small {
+    color: #94a3b8;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+/* STATS GRID */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat-box {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.stat-icon {
+    font-size: 2.2rem;
+}
+
+.stat-info h3 {
+    font-size: 1.3rem;
+    color: #38bdf8;
+}
+
+.stat-info p {
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
